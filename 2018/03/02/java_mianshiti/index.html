@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="java," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Geyl的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="java基础Arrays.sort实现原理和Collection实现原理foreach和while的区别(编译之后)线程池的种类，区别和使用场景分析线程池的实现原理和线程的调度过程线程池如何调优线程池的最大线程数目根据什么确定动态代理的几种方式HashMap的并发问题了解LinkedHashMap的应用吗反射的原理，反射创建类实例的三种方式是什么？cloneable接口实现原理，浅拷贝or深拷贝J">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java面试题">
+<meta property="og:url" content="http://yoursite.com/2018/03/02/java_mianshiti/index.html">
+<meta property="og:site_name" content="Geyl的博客">
+<meta property="og:description" content="java基础Arrays.sort实现原理和Collection实现原理foreach和while的区别(编译之后)线程池的种类，区别和使用场景分析线程池的实现原理和线程的调度过程线程池如何调优线程池的最大线程数目根据什么确定动态代理的几种方式HashMap的并发问题了解LinkedHashMap的应用吗反射的原理，反射创建类实例的三种方式是什么？cloneable接口实现原理，浅拷贝or深拷贝J">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-14T06:03:58.941Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java面试题">
+<meta name="twitter:description" content="java基础Arrays.sort实现原理和Collection实现原理foreach和while的区别(编译之后)线程池的种类，区别和使用场景分析线程池的实现原理和线程的调度过程线程池如何调优线程池的最大线程数目根据什么确定动态代理的几种方式HashMap的并发问题了解LinkedHashMap的应用吗反射的原理，反射创建类实例的三种方式是什么？cloneable接口实现原理，浅拷贝or深拷贝J">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/02/java_mianshiti/"/>
+
+
+
+
+
+  <title>java面试题 | Geyl的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Geyl的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/02/java_mianshiti/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Geyl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Geyl的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java面试题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-02T13:04:20+08:00">
+                2018-03-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/资料/" itemprop="url" rel="index">
+                    <span itemprop="name">资料</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="java基础"><a href="#java基础" class="headerlink" title="java基础"></a>java基础</h2><p>Arrays.sort实现原理和Collection实现原理<br>foreach和while的区别(编译之后)<br>线程池的种类，区别和使用场景<br>分析线程池的实现原理和线程的调度过程<br>线程池如何调优<br>线程池的最大线程数目根据什么确定<br>动态代理的几种方式<br>HashMap的并发问题<br>了解LinkedHashMap的应用吗<br>反射的原理，反射创建类实例的三种方式是什么？<br>cloneable接口实现原理，浅拷贝or深拷贝<br>Java NIO使用<br>hashtable和hashmap的区别及实现原理，hashmap会问到数组索引，hash碰撞怎么解决<br>arraylist和linkedlist区别及实现原理<br>反射中，Class.forName和ClassLoader区别<br>String，Stringbuffer，StringBuilder的区别？<br>有没有可能2个不相等的对象有相同的hashcode<br>简述NIO的最佳实践，比如netty，mina<br>TreeMap的实现原理</p>
+<h3 id="JVM相关"><a href="#JVM相关" class="headerlink" title="JVM相关"></a>JVM相关</h3><p>类的实例化顺序，比如父类静态数据，构造函数，字段，子类静态数据，构造函数，字段，他们的执行顺序<br>JVM内存分代<br>Java 8的内存分代改进<br>JVM垃圾回收机制，何时触发MinorGC等操作<br>jvm中一次完整的GC流程（从ygc到fgc）是怎样的，重点讲讲对象如何晋升到老年代，几种主要的jvm参数等<br>你知道哪几种垃圾收集器，各自的优缺点，重点讲下cms，g1<br>新生代和老生代的内存回收策略<br>Eden和Survivor的比例分配等<br>深入分析了Classloader，双亲委派机制<br>JVM的编译优化<br>对Java内存模型的理解，以及其在并发中的应用<br>指令重排序，内存栅栏等<br>OOM错误，stackoverflow错误，permgen space错误<br>JVM常用参数<br>tomcat结构，类加载器流程<br>volatile的语义，它修饰的变量一定线程安全吗<br>g1和cms区别,吞吐量优先和响应优先的垃圾收集器选择<br>说一说你对环境变量classpath的理解？如果一个类不在classpath下，为什么会抛出ClassNotFoundException异常，如果在不改变这个类路径的前期下，怎样才能正确加载这个类？<br>说一下强引用、软引用、弱引用、虚引用以及他们之间和gc的关系</p>
+<h3 id="JUC-并发相关"><a href="#JUC-并发相关" class="headerlink" title="JUC/并发相关"></a>JUC/并发相关</h3><p>ThreadLocal用过么，原理是什么，用的时候要注意什么<br>Synchronized和Lock的区别<br>synchronized 的原理，什么是自旋锁，偏向锁，轻量级锁，什么叫可重入锁，什么叫公平锁和非公平锁<br>concurrenthashmap具体实现及其原理，jdk8下的改版<br>用过哪些原子类，他们的参数以及原理是什么<br>cas是什么，他会产生什么问题（ABA问题的解决，如加入修改次数、版本号）<br>如果让你实现一个并发安全的链表，你会怎么做<br>简述ConcurrentLinkedQueue和LinkedBlockingQueue的用处和不同之处<br>简述AQS的实现原理<br>countdowlatch和cyclicbarrier的用法，以及相互之间的差别?<br>concurrent包中使用过哪些类？分别说说使用在什么场景？为什么要使用？<br>LockSupport工具<br>Condition接口及其实现原理<br>Fork/Join框架的理解<br>jdk8的parallelStream的理解<br>分段锁的原理,锁力度减小的思考</p>
+<h2 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h2><p>Spring AOP与IOC的实现原理<br>Spring的beanFactory和factoryBean的区别<br>为什么CGlib方式可以对接口实现代理？<br>RMI与代理模式<br>Spring的事务隔离级别，实现原理<br>对Spring的理解，非单例注入的原理？它的生命周期？循环注入的原理，aop的实现原理，说说aop中的几个术语，它们是怎么相互工作的？<br>Mybatis的底层实现原理<br>MVC框架原理，他们都是怎么做url路由的<br>spring boot特性，优势，适用场景等<br>quartz和timer对比<br>spring的controller是单例还是多例，怎么保证并发的安全</p>
+<h2 id="分布式相关"><a href="#分布式相关" class="headerlink" title="分布式相关"></a>分布式相关</h2><p>Dubbo的底层实现原理和机制<br>描述一个服务从发布到被消费的详细过程<br>分布式系统怎么做服务治理<br>接口的幂等性的概念<br>消息中间件如何解决消息丢失问题<br>Dubbo的服务请求失败怎么处理<br>重连机制会不会造成错误<br>对分布式事务的理解<br>如何实现负载均衡，有哪些算法可以实现？<br>Zookeeper的用途，选举的原理是什么？<br>数据的垂直拆分水平拆分。<br>zookeeper原理和适用场景<br>zookeeper watch机制<br>redis/zk节点宕机如何处理<br>分布式集群下如何做到唯一序列号<br>如何做一个分布式锁<br>用过哪些MQ，怎么用的，和其他mq比较有什么优缺点，MQ的连接是线程安全的吗<br>MQ系统的数据如何保证不丢失<br>列举出你能想到的数据库分库分表策略；分库分表后，如何解决全表查询的问题。</p>
+<h2 id="算法-amp-数据结构-amp-设计模式"><a href="#算法-amp-数据结构-amp-设计模式" class="headerlink" title="算法&amp;数据结构&amp;设计模式"></a>算法&amp;数据结构&amp;设计模式</h2><p>海量url去重类问题（布隆过滤器）<br>数组和链表数据结构描述，各自的时间复杂度<br>二叉树遍历<br>快速排序<br>BTree相关的操作<br>在工作中遇到过哪些设计模式，是如何应用的<br>hash算法的有哪几种，优缺点，使用场景<br>什么是一致性hash<br>paxos算法<br>在装饰器模式和代理模式之间，你如何抉择，请结合自身实际情况聊聊<br>代码重构的步骤和原因，如果理解重构到模式？</p>
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p>MySQL InnoDB存储的文件结构<br>索引树是如何维护的？<br>数据库自增主键可能的问题<br>MySQL的几种优化<br>mysql索引为什么使用B+树<br>数据库锁表的相关处理<br>索引失效场景<br>高并发下如何做到安全的修改同一行数据，乐观锁和悲观锁是什么，INNODB的行级锁有哪2种，解释其含义<br>数据库会死锁吗，举一个死锁的例子，mysql怎么解决死锁</p>
+<h2 id="Redis-amp-缓存相关"><a href="#Redis-amp-缓存相关" class="headerlink" title="Redis&amp;缓存相关"></a>Redis&amp;缓存相关</h2><p>Redis的并发竞争问题如何解决了解Redis事务的CAS操作吗<br>缓存机器增删如何对系统影响最小，一致性哈希的实现<br>Redis持久化的几种方式，优缺点是什么，怎么实现的<br>Redis的缓存失效策略<br>缓存穿透的解决办法<br>redis集群，高可用，原理<br>mySQL里有2000w数据，redis中只存20w的数据，如何保证redis中的数据都是热点数据<br>用Redis和任意语言实现一段恶意登录保护的代码，限制1小时内每用户Id最多只能登录5次<br>redis的数据淘汰策略</p>
+<h2 id="网络相关"><a href="#网络相关" class="headerlink" title="网络相关"></a>网络相关</h2><p>http1.0和http1.1有什么区别<br>TCP/IP协议<br>TCP三次握手和四次挥手的流程，为什么断开连接要4次,如果握手只有两次，会出现什么<br>TIME_WAIT和CLOSE_WAIT的区别<br>说说你知道的几种HTTP响应码<br>当你用浏览器打开一个链接的时候，计算机做了哪些工作步骤<br>TCP/IP如何保证可靠性，数据包有哪些数据组成<br>长连接与短连接<br>Http请求get和post的区别以及数据包格式<br>简述tcp建立连接3次握手，和断开连接4次握手的过程；关闭连接时，出现TIMEWAIT过多是由什么原因引起，是出现在主动断开方还是被动断开方。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>maven解决依赖冲突,快照版和发行版的区别<br>Linux下IO模型有几种，各自的含义是什么<br>实际场景问题，海量登录日志如何排序和处理SQL操作，主要是索引和聚合函数的应用<br>实际场景问题解决，典型的TOP K问题<br>线上bug处理流程<br>如何从线上日志发现问题<br>linux利用哪些命令，查找哪里出了问题（例如io密集任务，cpu过度）<br>场景问题，有一个第三方接口，有很多个线程去调用获取数据，现在规定每秒钟最多有10个线程同时调用它，如何做到。<br>用三个线程按顺序循环打印abc三个字母，比如abcabcabc。<br>常见的缓存策略有哪些，你们项目中用到了什么缓存系统，如何设计的<br>设计一个秒杀系统，30分钟没付款就自动关闭交易（并发会很高）<br>请列出你所了解的性能测试工具<br>后台系统怎么防止请求重复提交？</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/02/idea-springboot/" rel="next" title="解决intellij中spring boot工程 无法用mainApplication启动">
+                <i class="fa fa-chevron-left"></i> 解决intellij中spring boot工程 无法用mainApplication启动
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/02/js_form_submit/" rel="prev" title="ajax提交表单对表单序列化的2种方式">
+                ajax提交表单对表单序列化的2种方式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <p class="site-author-name" itemprop="name">Geyl</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ylge" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:639396194@qq.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#java基础"><span class="nav-number">1.</span> <span class="nav-text">java基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM相关"><span class="nav-number">1.1.</span> <span class="nav-text">JVM相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JUC-并发相关"><span class="nav-number">1.2.</span> <span class="nav-text">JUC/并发相关</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring"><span class="nav-number">2.</span> <span class="nav-text">Spring</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式相关"><span class="nav-number">3.</span> <span class="nav-text">分布式相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法-amp-数据结构-amp-设计模式"><span class="nav-number">4.</span> <span class="nav-text">算法&数据结构&设计模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库"><span class="nav-number">5.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-amp-缓存相关"><span class="nav-number">6.</span> <span class="nav-text">Redis&缓存相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络相关"><span class="nav-number">7.</span> <span class="nav-text">网络相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">8.</span> <span class="nav-text">其他</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Geyl</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

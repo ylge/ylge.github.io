@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="idea,git," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Geyl的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="原文地址：http://blog.csdn.net/autfish/article/details/52513465  工作中多人使用版本控制软件协作开发，常见的应用场景归纳如下： 假设小组中有两个人，组长小张，组员小袁 场景一：小张创建项目并提交到远程Git仓库 场景二：小袁从远程git仓库上获取项目源码 场景三：小袁修改了部分源码，提交到远程仓库 场景四：小张从远程仓库获取小袁的提交 场景五：">
+<meta name="keywords" content="idea,git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IDEA 使用git说明">
+<meta property="og:url" content="http://yoursite.com/2018/03/02/idea-git/index.html">
+<meta property="og:site_name" content="Geyl的博客">
+<meta property="og:description" content="原文地址：http://blog.csdn.net/autfish/article/details/52513465  工作中多人使用版本控制软件协作开发，常见的应用场景归纳如下： 假设小组中有两个人，组长小张，组员小袁 场景一：小张创建项目并提交到远程Git仓库 场景二：小袁从远程git仓库上获取项目源码 场景三：小袁修改了部分源码，提交到远程仓库 场景四：小张从远程仓库获取小袁的提交 场景五：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912161234797">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912161334752">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912164147415">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912165901032">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912165911954">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912165921938">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912165942829">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912170148207">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912170214880">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912170628933">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912171844429">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912171858663">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912173123122">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912173307202">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912173718844">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912174243815">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912174329143">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912174729488">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912175201306">
+<meta property="og:image" content="http://img.blog.csdn.net/20160912175359903">
+<meta property="og:updated_time" content="2017-09-01T08:01:50.001Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IDEA 使用git说明">
+<meta name="twitter:description" content="原文地址：http://blog.csdn.net/autfish/article/details/52513465  工作中多人使用版本控制软件协作开发，常见的应用场景归纳如下： 假设小组中有两个人，组长小张，组员小袁 场景一：小张创建项目并提交到远程Git仓库 场景二：小袁从远程git仓库上获取项目源码 场景三：小袁修改了部分源码，提交到远程仓库 场景四：小张从远程仓库获取小袁的提交 场景五：">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20160912161234797">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"hide","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/02/idea-git/"/>
+
+
+
+
+
+  <title>IDEA 使用git说明 | Geyl的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Geyl的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/02/idea-git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Geyl">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Geyl的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">IDEA 使用git说明</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-02T13:04:20+08:00">
+                2018-03-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工具使用/" itemprop="url" rel="index">
+                    <span itemprop="name">工具使用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>原文地址：<a href="http://blog.csdn.net/autfish/article/details/52513465" target="_blank" rel="external">http://blog.csdn.net/autfish/article/details/52513465</a></p>
+<p> 工作中多人使用<a href="http://lib.csdn.net/base/git" target="_blank" rel="external">版本控制</a>软件协作开发，常见的应用场景归纳如下：</p>
+<p>假设小组中有两个人，组长小张，组员小袁</p>
+<p>场景一：小张创建项目并提交到远程<a href="http://lib.csdn.net/base/git" target="_blank" rel="external">Git</a>仓库</p>
+<p>场景二：小袁从远程<a href="http://lib.csdn.net/base/git" target="_blank" rel="external">git</a>仓库上获取项目源码</p>
+<p>场景三：小袁修改了部分源码，提交到远程仓库</p>
+<p>场景四：小张从远程仓库获取小袁的提交</p>
+<p>场景五：小袁接受了一个新功能的任务，创建了一个分支并在分支上开发</p>
+<p>场景六：小袁把分支提交到远程Git仓库</p>
+<p>场景七：小张获取小袁提交的分支</p>
+<p>场景八：小张把分支合并到主干</p>
+<p>下面来看以上各场景在IDEA中对应的操作。</p>
+<h3 id="场景一：小张创建项目并提交到远程Git仓库"><a href="#场景一：小张创建项目并提交到远程Git仓库" class="headerlink" title="场景一：小张创建项目并提交到远程Git仓库"></a>场景一：小张创建项目并提交到远程Git仓库</h3><p>创建好项目，选择VCS - &gt; Import into Version Control -&gt; Create Git Repository</p>
+<p><img src="http://img.blog.csdn.net/20160912161234797" alt="img"></p>
+<p>接下来指定本地仓库的位置，按个人习惯指定即可，例如这里选择了项目源代码同目录</p>
+<p><img src="http://img.blog.csdn.net/20160912161334752" alt="img"></p>
+<p>点击OK后创建完成本地仓库，注意，这里仅仅是本地的。下面把项目源码添加到本地仓库。</p>
+<p>下图是Git与提交有关的三个命令对应的操作，Add命令是把文件从IDE的工作目录添加到本地仓库的stage区，Commit命令把stage区的暂存文件提交到当前分支的仓库，并清空stage区。Push命令把本地仓库的提交同步到远程仓库。</p>
+<p><img src="http://img.blog.csdn.net/20160912164147415" alt="img"></p>
+<p>IDEA中对操作做了一定的简化，Commit和Push可以在一步中完成。</p>
+<p>具体操作，在项目上点击右键，选择Git菜单</p>
+<p><img src="http://img.blog.csdn.net/20160912165901032" alt="img"></p>
+<p><img src="http://img.blog.csdn.net/20160912165911954" alt="img"></p>
+<p><img src="http://img.blog.csdn.net/20160912165921938" alt="img"></p>
+<p>因为是第一次提交，Push前需要指定远程仓库的地址。如下图，点击Define remote后，在弹出的窗口中输入远程仓库地址。</p>
+<p><img src="http://img.blog.csdn.net/20160912165942829" alt="img"></p>
+<h3 id="场景二：小袁从远程Git仓库上获取项目源码"><a href="#场景二：小袁从远程Git仓库上获取项目源码" class="headerlink" title="场景二：小袁从远程Git仓库上获取项目源码"></a>场景二：小袁从远程Git仓库上获取项目源码</h3><p>即克隆项目，操作如下：</p>
+<p><img src="http://img.blog.csdn.net/20160912170148207" alt="img"></p>
+<p>输入小张Push时填写的远程仓库地址</p>
+<p><img src="http://img.blog.csdn.net/20160912170214880" alt="img"></p>
+<p>接下来按向导操作，即可把项目从远程仓库克隆到本地仓库和IDE工作区。</p>
+<h3 id="场景三：小袁修改了部分源码，提交到远程仓库"><a href="#场景三：小袁修改了部分源码，提交到远程仓库" class="headerlink" title="场景三：小袁修改了部分源码，提交到远程仓库"></a>场景三：小袁修改了部分源码，提交到远程仓库</h3><p>这个操作和首次提交的流程基本一致，分别是 Add -&gt; Commit -&gt; Push。请参考场景一</p>
+<h3 id="场景四：小张从远程仓库获取小袁的提交"><a href="#场景四：小张从远程仓库获取小袁的提交" class="headerlink" title="场景四：小张从远程仓库获取小袁的提交"></a>场景四：小张从远程仓库获取小袁的提交</h3><p>获取更新有两个命令：Fetch和Pull，Fetch是从远程仓库下载文件到本地的origin/master，然后可以手动对比修改决定是否合并到本地的master库。Push则是直接下载并合并。如果各成员在工作中都执行修改前先更新的规范，则可以直接使用Pull方式以简化操作。</p>
+<p><img src="http://img.blog.csdn.net/20160912170628933" alt="img"></p>
+<h3 id="场景五：小袁接受了一个新功能的任务，创建了一个分支并在分支上开发"><a href="#场景五：小袁接受了一个新功能的任务，创建了一个分支并在分支上开发" class="headerlink" title="场景五：小袁接受了一个新功能的任务，创建了一个分支并在分支上开发"></a>场景五：小袁接受了一个新功能的任务，创建了一个分支并在分支上开发</h3><p>建分支也是一个常用的操作，例如临时修改bug、开发不确定是否加入的功能等，都可以创建一个分支，再等待合适的时机合并到主干。</p>
+<p>创建流程如下：</p>
+<p><img src="http://img.blog.csdn.net/20160912171844429" alt="img"></p>
+<p>选择New Branch并输入一个分支的名称</p>
+<p><img src="http://img.blog.csdn.net/20160912171858663" alt="img"></p>
+<p>创建完成后注意IDEA的右下角，如下图，Git: wangpangzi_branch表示已经自动切换到wangpangzi_branch分支，当前工作在这个分支上。</p>
+<p>点击后弹出一个小窗口，在Local Branches中有其他可用的本地分支选项，点击后选择Checkout即可切换当前工作的分支。</p>
+<p><img src="http://img.blog.csdn.net/20160912173123122" alt="img"></p>
+<p>如下图，点击Checkout</p>
+<p><img src="http://img.blog.csdn.net/20160912173307202" alt="img"></p>
+<p>注意，这里创建的分支仅仅在本地仓库，如果想让组长小张获取到这个分支，还需要提交到远程仓库。</p>
+<h3 id="场景六：小袁把分支提交到远程Git仓库"><a href="#场景六：小袁把分支提交到远程Git仓库" class="headerlink" title="场景六：小袁把分支提交到远程Git仓库"></a>场景六：小袁把分支提交到远程Git仓库</h3><p>切换到新建的分支，使用Push功能</p>
+<p><img src="http://img.blog.csdn.net/20160912173718844" alt="img"></p>
+<p><img src="http://img.blog.csdn.net/20160912174243815" alt="img"></p>
+<h3 id="场景七：小张获取小袁提交的分支"><a href="#场景七：小张获取小袁提交的分支" class="headerlink" title="场景七：小张获取小袁提交的分支"></a>场景七：小张获取小袁提交的分支</h3><p>使用Pull功能打开更新窗口，点击Remote栏后面的刷新按钮，会在Branches to merge栏中刷新出新的分支。这里并不想做合并，所以不要选中任何分支，直接点击Pull按钮完成操作。</p>
+<p><img src="http://img.blog.csdn.net/20160912174329143" alt="img"></p>
+<p>更新后，再点击右下角，可以看到在Remote Branches区已经有了新的分支，点击后在弹出的子菜单中选择Checkout as new local branch，在本地仓库中创建该分支。完成后在Local Branches区也会出现该分支的选项，可以按上面的方法，点击后选择Checkout切换。</p>
+<p><img src="http://img.blog.csdn.net/20160912174729488" alt="img"></p>
+<h3 id="场景八：小张把分支合并到主干"><a href="#场景八：小张把分支合并到主干" class="headerlink" title="场景八：小张把分支合并到主干"></a>场景八：小张把分支合并到主干</h3><p>新功能开发完成，体验很好，项目组决定把该功能合并到主干上。</p>
+<p>切换到master分支，选择Merge Changes</p>
+<p><img src="http://img.blog.csdn.net/20160912175201306" alt="img"></p>
+<p>选择要合并的分支，点击Merge完成</p>
+<p><img src="http://img.blog.csdn.net/20160912175359903" alt="img"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/idea/" rel="tag"># idea</a>
+          
+            <a href="/tags/git/" rel="tag"># git</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/02/html-uploadfile/" rel="next" title="html图片上传并预览">
+                <i class="fa fa-chevron-left"></i> html图片上传并预览
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/02/idea-springboot/" rel="prev" title="解决intellij中spring boot工程 无法用mainApplication启动">
+                解决intellij中spring boot工程 无法用mainApplication启动 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <p class="site-author-name" itemprop="name">Geyl</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/ylge" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:639396194@qq.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#场景一：小张创建项目并提交到远程Git仓库"><span class="nav-number">1.</span> <span class="nav-text">场景一：小张创建项目并提交到远程Git仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#场景二：小袁从远程Git仓库上获取项目源码"><span class="nav-number">2.</span> <span class="nav-text">场景二：小袁从远程Git仓库上获取项目源码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#场景三：小袁修改了部分源码，提交到远程仓库"><span class="nav-number">3.</span> <span class="nav-text">场景三：小袁修改了部分源码，提交到远程仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#场景四：小张从远程仓库获取小袁的提交"><span class="nav-number">4.</span> <span class="nav-text">场景四：小张从远程仓库获取小袁的提交</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#场景五：小袁接受了一个新功能的任务，创建了一个分支并在分支上开发"><span class="nav-number">5.</span> <span class="nav-text">场景五：小袁接受了一个新功能的任务，创建了一个分支并在分支上开发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#场景六：小袁把分支提交到远程Git仓库"><span class="nav-number">6.</span> <span class="nav-text">场景六：小袁把分支提交到远程Git仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#场景七：小张获取小袁提交的分支"><span class="nav-number">7.</span> <span class="nav-text">场景七：小张获取小袁提交的分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#场景八：小张把分支合并到主干"><span class="nav-number">8.</span> <span class="nav-text">场景八：小张把分支合并到主干</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Geyl</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
